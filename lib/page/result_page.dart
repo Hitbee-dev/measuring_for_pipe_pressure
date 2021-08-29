@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'main_page.dart';
+
 class ResultPage extends StatefulWidget {
   const ResultPage({Key? key}) : super(key: key);
 
@@ -24,24 +26,23 @@ class _ResultPageState extends State<ResultPage> {
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+            child: Center(
+              child: Container(
+                width: 150,
+                child: Column(
                   children: [
-                    resultText("Δ", "P", ":"),
-                    resultText("h", "L", ":"),
-                    resultText("f", "real_1", ":"),
-                    resultText("f", "feal_2", ":"),
-                    resultText("V", "1", ":"),
-                    resultText("V", "2", ":"),
-                    resultText("Q", "1", ":"),
-                    resultText("Q", "2", ":"),
+                    resultText("Δ", "P", ":", " ", "kPa"),
+                    resultText("h", "L", ":", " ", ""),
+                    resultText("V", "1", ":", " ", "m/s"),
+                    resultText("V", "2", ":", " ", "m/s"),
+                    resultText("Q", "1", ":", " ", "m^3/s"),
+                    resultText("Q", "2", ":", " ", "m^3/s"),
+                    resultText("f", "real_1", ":", " ", ""),
+                    resultText("f", "feal_2", ":", " ", ""),
                     backButton()
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -49,13 +50,17 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  Widget resultText(String result_f, String result_m, String result_b) {
+  Widget resultText(String result_f, String result_m, String result_b,
+      String result_data, String result_u) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(result_f, style: TextStyle(fontSize: 22)),
         Text(result_m, style: TextStyle(fontSize: 14)),
         Text(result_b, style: TextStyle(fontSize: 25)),
+        Text(result_data, style: TextStyle(fontSize: 20)),
+        Text(result_u, style: TextStyle(fontSize: 14)),
       ],
     );
   }
