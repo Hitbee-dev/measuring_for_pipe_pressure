@@ -1,5 +1,5 @@
 name: measuring_for_pipe_pressure
-description: 콜브룩 방정식을 이용한 분지 파이프 시스템 압력강하 측정 앱
+description: S.Haaland의 방정식을 이용한 분지 파이프 시스템 압력강하 측정 앱
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
