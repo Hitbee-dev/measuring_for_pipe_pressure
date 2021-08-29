@@ -24,16 +24,24 @@ class _ResultPageState extends State<ResultPage> {
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [],
-                  ),
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    resultText("Δ", "P", ":"),
+                    resultText("h", "L", ":"),
+                    resultText("f", "real_1", ":"),
+                    resultText("f", "feal_2", ":"),
+                    resultText("V", "1", ":"),
+                    resultText("V", "2", ":"),
+                    resultText("Q", "1", ":"),
+                    resultText("Q", "2", ":"),
+                    backButton()
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -41,7 +49,18 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  Widget resultButton() {
+  Widget resultText(String result_f, String result_m, String result_b) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(result_f, style: TextStyle(fontSize: 22)),
+        Text(result_m, style: TextStyle(fontSize: 14)),
+        Text(result_b, style: TextStyle(fontSize: 25)),
+      ],
+    );
+  }
+
+  Widget backButton() {
     return Container(
       padding: EdgeInsets.only(top: 20),
       height: 70,
