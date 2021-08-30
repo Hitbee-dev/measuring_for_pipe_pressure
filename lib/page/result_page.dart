@@ -11,6 +11,19 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  double a_one = 0;
+  double a_two = 0;
+  double c_one = 0;
+  double c_two = 0;
+  double v_one = 0;
+  double v_two = 0;
+  double r_one = 0;
+  double r_two = 0;
+  double q_one = 0;
+  double q_two = 0;
+  double fr_one = 0;
+  double fr_two = 0;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,17 +41,81 @@ class _ResultPageState extends State<ResultPage> {
           child: SingleChildScrollView(
             child: Center(
               child: Container(
-                width: 150,
+                width: 300,
                 child: Column(
                   children: [
-                    resultText("Δ", "P", ":", " ", "kPa"),
-                    resultText("h", "L", ":", " ", ""),
-                    resultText("V", "1", ":", " ", "m/s"),
-                    resultText("V", "2", ":", " ", "m/s"),
-                    resultText("Q", "1", ":", " ", "m^3/s"),
-                    resultText("Q", "2", ":", " ", "m^3/s"),
-                    resultText("f", "real_1", ":", " ", ""),
-                    resultText("f", "feal_2", ":", " ", ""),
+                    resultText(
+                        "A",
+                        "1",
+                        ":",
+                        " ${((Get.arguments as SettingData).a_one).toStringAsFixed(3)}",
+                        ""),
+                    resultText(
+                        "A",
+                        "2",
+                        ":",
+                        " ${((Get.arguments as SettingData).a_two).toStringAsFixed(3)}",
+                        ""),
+                    resultText(
+                        "C",
+                        "1",
+                        ":",
+                        " ${((Get.arguments as SettingData).c_one).toStringAsFixed(3)}",
+                        ""),
+                    resultText(
+                        "C",
+                        "2",
+                        ":",
+                        " ${((Get.arguments as SettingData).c_two).toStringAsFixed(3)}",
+                        ""),
+                    resultText(
+                        "ΔP",
+                        "",
+                        ":",
+                        " ${((Get.arguments as SettingData).d_p).toStringAsFixed(3)}",
+                        "kPa"),
+                    resultText(
+                        "h",
+                        "L",
+                        ":",
+                        " ${((Get.arguments as SettingData).h_l).toStringAsFixed(3)}",
+                        "m"),
+                    resultText(
+                        "V",
+                        "1",
+                        ":",
+                        " ${((Get.arguments as SettingData).v_one).toStringAsFixed(3)}",
+                        "m/s"),
+                    resultText(
+                        "V",
+                        "2",
+                        ":",
+                        " ${((Get.arguments as SettingData).v_two).toStringAsFixed(3)}",
+                        "m/s"),
+                    resultText(
+                        "Q",
+                        "1",
+                        ":",
+                        " ${((Get.arguments as SettingData).q_one).toStringAsFixed(3)}",
+                        "m^3/s"),
+                    resultText(
+                        "Q",
+                        "2",
+                        ":",
+                        " ${((Get.arguments as SettingData).q_two).toStringAsFixed(3)}",
+                        "m^3/s"),
+                    resultText(
+                        "f",
+                        "real_1",
+                        ":",
+                        " ${((Get.arguments as SettingData).fr_one).toStringAsFixed(3)}",
+                        ""),
+                    resultText(
+                        "f",
+                        "feal_2",
+                        ":",
+                        " ${((Get.arguments as SettingData).fr_two).toStringAsFixed(3)}",
+                        ""),
                     backButton()
                   ],
                 ),

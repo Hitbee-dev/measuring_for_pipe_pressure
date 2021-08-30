@@ -26,6 +26,35 @@ class _MainPageState extends State<MainPage> {
   late TextEditingController saved_F_one;
   late TextEditingController saved_F_two;
   late TextEditingController saved_Delta;
+  double a_one = 0;
+  double a_two = 0;
+  double c_one = 0;
+  double c_two = 0;
+  double v_one = 0;
+  double v_two = 0;
+  double r_one = 0;
+  double r_two = 0;
+  double q_one = 0;
+  double q_two = 0;
+  double fr_one = 0;
+  double fr_two = 0;
+  double d_p = 0;
+  double h_l = 0;
+  double g_a = 9.8;
+
+  double con_Q_total = 0;
+  double con_Epsilon = 0;
+  double con_D_one = 0;
+  double con_D_two = 0;
+  double con_Gamma = 0;
+  double con_Upsilon = 0;
+  double con_L_one = 0;
+  double con_L_two = 0;
+  double con_K_one = 0;
+  double con_K_two = 0;
+  double con_F_one = 0;
+  double con_F_two = 0;
+  double con_Delta = 0;
 
   @override
   void initState() {
@@ -68,32 +97,39 @@ class _MainPageState extends State<MainPage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
                 children: [
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      inputData("Q", saved_Q_total, "total유량", "m^3/s"),
-                      inputData("D1", saved_D_one, "1번 pipe 직경", "mm"),
-                      inputData("γw", saved_Gamma, "물의 비중량", "N/m^3"),
-                      inputData("L1", saved_L_one, "1번 pipe 길이", "m"),
-                      inputData("K1", saved_K_one, "1번 pipe 수두손실 계수", ""),
-                      inputData("f if1", saved_F_one, "1번 pipe 예상 마찰계수", ""),
-                      inputData("ΔZ", saved_Delta, "pipe 높이 차", "m"),
+                      Column(
+                        children: [
+                          inputData("Q", saved_Q_total, "total유량", "m^3/s"),
+                          inputData("D1", saved_D_one, "1번 pipe 직경", "mm"),
+                          inputData("γw", saved_Gamma, "물의 비중량", "N/m^3"),
+                          inputData("L1", saved_L_one, "1번 pipe 길이", "m"),
+                          inputData("K1", saved_K_one, "1번 pipe 수두손실 계수", ""),
+                          inputData(
+                              "f if1", saved_F_one, "1번 pipe 예상 마찰계수", ""),
+                          inputData("ΔZ", saved_Delta, "pipe 높이 차", "m"),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          inputData("ε", saved_Epsilon, "파이프 조도", "mm"),
+                          inputData("D2", saved_D_two, "2번 pipe 직경", "mm"),
+                          inputData("υw", saved_Upsilon, "물의 점도", "m^2/s"),
+                          inputData("L2", saved_L_two, "2번 pipe 길이", "m"),
+                          inputData("K2", saved_K_two, "2번 pipe 수두손실 계수", ""),
+                          inputData(
+                              "f if2", saved_F_two, "2번 pipe 예상 마찰계수", ""),
+                          resultButton()
+                        ],
+                      ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      inputData("ε", saved_Epsilon, "파이프 조도", "mm"),
-                      inputData("D2", saved_D_two, "2번 pipe 직경", "mm"),
-                      inputData("υw", saved_Upsilon, "물의 점도", "m^2/s"),
-                      inputData("L2", saved_L_two, "2번 pipe 길이", "m"),
-                      inputData("K2", saved_K_two, "2번 pipe 수두손실 계수", ""),
-                      inputData("f if2", saved_F_two, "2번 pipe 예상 마찰계수", ""),
-                      resultButton()
-                    ],
-                  ),
+                  exampleButton()
                 ],
               ),
             ),
@@ -164,24 +200,52 @@ class _MainPageState extends State<MainPage> {
             } else if (saved_Delta.text == "") {
               SnackPrint("ΔZ: pipe 높이 차 값을 입력 해 주세요.");
             } else {
+              ResultData();
               Get.offNamed("/result",
                   arguments: SettingData(
-                      saved_Q_total.text,
-                      saved_Epsilon.text,
-                      saved_D_one.text,
-                      saved_D_two.text,
-                      saved_Gamma.text,
-                      saved_Upsilon.text,
-                      saved_L_one.text,
-                      saved_L_two.text,
-                      saved_K_one.text,
-                      saved_K_two.text,
-                      saved_F_one.text,
-                      saved_F_two.text,
-                      saved_Delta.text));
+                      a_one,
+                      a_two,
+                      c_one,
+                      c_two,
+                      v_one,
+                      v_two,
+                      r_one,
+                      r_two,
+                      q_one,
+                      q_two,
+                      fr_one,
+                      fr_two,
+                      d_p,
+                      h_l));
             }
           },
           child: Text("Result", style: TextStyle(fontWeight: FontWeight.bold))),
+    );
+  }
+
+  Widget exampleButton() {
+    return Container(
+      padding: EdgeInsets.only(top: 20),
+      height: 70,
+      width: 300,
+      child: ElevatedButton(
+          onPressed: () {
+            saved_Q_total.text = "0.03";
+            saved_Epsilon.text = "0.15";
+            saved_D_one.text = "100";
+            saved_D_two.text = "50";
+            saved_Gamma.text = "9810";
+            saved_Upsilon.text = "0.000001"; //1*10^-6
+            saved_L_one.text = "3";
+            saved_L_two.text = "7";
+            saved_K_one.text = "12.4";
+            saved_K_two.text = "5.59";
+            saved_F_one.text = "0.02";
+            saved_F_two.text = "0.025";
+            saved_Delta.text = "0";
+          },
+          child:
+              Text("Example", style: TextStyle(fontWeight: FontWeight.bold))),
     );
   }
 
@@ -194,35 +258,78 @@ class _MainPageState extends State<MainPage> {
       ),
     ));
   }
+
+  ResultData() {
+    con_Q_total = double.parse(saved_Q_total.text);
+    con_Epsilon = double.parse(saved_Epsilon.text);
+    con_Upsilon = double.parse(saved_Upsilon.text);
+    con_D_one = double.parse(saved_D_one.text);
+    con_D_two = double.parse(saved_D_two.text);
+    con_Gamma = double.parse(saved_Gamma.text);
+    con_L_one = double.parse(saved_L_one.text);
+    con_L_two = double.parse(saved_L_two.text);
+    con_K_one = double.parse(saved_K_one.text);
+    con_K_two = double.parse(saved_K_two.text);
+    con_F_one = double.parse(saved_F_one.text);
+    con_F_two = double.parse(saved_F_two.text);
+    con_Delta = double.parse(saved_Delta.text);
+
+    // function
+    a_one = pow((con_D_one / 2), 2) * pi;
+    a_two = pow((con_D_two / 2), 2) * pi;
+    c_one = (con_F_one * con_L_one / con_D_one) + con_K_one;
+    c_two = (con_F_two * con_L_two / con_D_two) + con_K_two;
+    v_two = (-a_two +
+            sqrt(pow(a_two, 2) - (1 - (c_two / c_one) * con_Q_total)) /
+                (1 - (c_two / c_one))) /
+        1000;
+    v_one = ((con_Q_total - v_two * a_two) / a_one);
+    r_one = ((v_one * con_D_one) / con_Upsilon);
+    r_two = ((v_two * con_D_two) / con_Upsilon);
+    fr_one = -1.8 *
+        log(pow(((con_Epsilon / con_D_one) / 3.7), 1.11) + (6.9 / r_one));
+    fr_two = -1.8 *
+        log(pow(((con_Epsilon / con_D_two) / 3.7), 1.11) + (6.9 / r_two));
+    fr_one = 1 / sqrt(fr_one);
+    fr_two = 1 / sqrt(fr_two);
+    q_one = v_one * a_one;
+    q_two = v_two * a_two;
+    h_l = c_two * (pow(v_two, 2) / (2 * g_a));
+    d_p = con_Gamma * c_two * (pow(v_two, 2) / (2 * g_a)) + con_Delta;
+
+    print(d_p);
+  }
 }
 
 class SettingData {
-  String q_total;
-  String epsilon;
-  String d_one;
-  String d_two;
-  String gamma;
-  String upsilon;
-  String l_one;
-  String l_two;
-  String k_one;
-  String k_two;
-  String f_one;
-  String f_two;
-  String delta;
+  double a_one;
+  double a_two;
+  double c_one;
+  double c_two;
+  double v_one;
+  double v_two;
+  double r_one;
+  double r_two;
+  double q_one;
+  double d_p;
+  double h_l;
+  double q_two;
+  double fr_one;
+  double fr_two;
 
   SettingData(
-      this.q_total,
-      this.epsilon,
-      this.d_one,
-      this.d_two,
-      this.gamma,
-      this.upsilon,
-      this.l_one,
-      this.l_two,
-      this.k_one,
-      this.k_two,
-      this.f_one,
-      this.f_two,
-      this.delta);
+      this.a_one,
+      this.a_two,
+      this.c_one,
+      this.c_two,
+      this.v_one,
+      this.v_two,
+      this.r_one,
+      this.r_two,
+      this.q_one,
+      this.q_two,
+      this.d_p,
+      this.h_l,
+      this.fr_one,
+      this.fr_two);
 }
