@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
   double fr_two = 0;
   double d_p = 0;
   double h_l = 0;
-  double g_a = 9.8;
+  double g_a = 9.81;
 
   double con_Q_total = 0;
   double con_Epsilon = 0;
@@ -55,6 +55,8 @@ class _MainPageState extends State<MainPage> {
   double con_F_one = 0;
   double con_F_two = 0;
   double con_Delta = 0;
+
+  int counter = 0;
 
   @override
   void initState() {
@@ -201,22 +203,6 @@ class _MainPageState extends State<MainPage> {
               SnackPrint("ΔZ: pipe 높이 차 값을 입력 해 주세요.");
             } else {
               ResultData();
-              Get.offNamed("/result",
-                  arguments: SettingData(
-                      a_one,
-                      a_two,
-                      c_one,
-                      c_two,
-                      v_one,
-                      v_two,
-                      r_one,
-                      r_two,
-                      q_one,
-                      q_two,
-                      fr_one,
-                      fr_two,
-                      d_p,
-                      h_l));
             }
           },
           child: Text("Result", style: TextStyle(fontWeight: FontWeight.bold))),
@@ -240,7 +226,7 @@ class _MainPageState extends State<MainPage> {
             saved_L_two.text = "7";
             saved_K_one.text = "12.4";
             saved_K_two.text = "5.59";
-            saved_F_one.text = "0.02";
+            saved_F_one.text = "0.020";
             saved_F_two.text = "0.025";
             saved_Delta.text = "0";
           },
@@ -261,13 +247,18 @@ class _MainPageState extends State<MainPage> {
 
   ResultData() {
     con_Q_total = double.parse(saved_Q_total.text);
+    con_Q_total = con_Q_total * pow(10, 9);
     con_Epsilon = double.parse(saved_Epsilon.text);
     con_Upsilon = double.parse(saved_Upsilon.text);
+    con_Upsilon = con_Upsilon * pow(10, 6);
     con_D_one = double.parse(saved_D_one.text);
     con_D_two = double.parse(saved_D_two.text);
     con_Gamma = double.parse(saved_Gamma.text);
+    con_Gamma = con_Gamma * pow(10, -9);
     con_L_one = double.parse(saved_L_one.text);
+    con_L_one = con_L_one * pow(10, 3);
     con_L_two = double.parse(saved_L_two.text);
+    con_L_two = con_L_two * pow(10, 3);
     con_K_one = double.parse(saved_K_one.text);
     con_K_two = double.parse(saved_K_two.text);
     con_F_one = double.parse(saved_F_one.text);
@@ -277,12 +268,12 @@ class _MainPageState extends State<MainPage> {
     // function
     a_one = pow((con_D_one / 2), 2) * pi;
     a_two = pow((con_D_two / 2), 2) * pi;
+    counter = 0;
+
+    // while (counter == 0) {
     c_one = (con_F_one * con_L_one / con_D_one) + con_K_one;
     c_two = (con_F_two * con_L_two / con_D_two) + con_K_two;
-    v_two = (-a_two +
-            sqrt(pow(a_two, 2) - (1 - (c_two / c_one) * con_Q_total)) /
-                (1 - (c_two / c_one))) /
-        1000;
+    v_two = con_Q_total / (a_one * sqrt(c_two / c_one) + a_two);
     v_one = ((con_Q_total - v_two * a_two) / a_one);
     r_one = ((v_one * con_D_one) / con_Upsilon);
     r_two = ((v_two * con_D_two) / con_Upsilon);
@@ -297,7 +288,31 @@ class _MainPageState extends State<MainPage> {
     h_l = c_two * (pow(v_two, 2) / (2 * g_a));
     d_p = con_Gamma * c_two * (pow(v_two, 2) / (2 * g_a)) + con_Delta;
 
-    print(d_p);
+    double persent = 0.01;
+
+    // if (fr_one == con_F_one + persent || fr_one == con_F_one - persent) {
+    //   (fr_two == con_F_two + persent) ? counter = 1 : print(con_F_one);
+    //   (fr_two == con_F_two - persent) ? counter = 1 : print(con_F_one);
+    // } else if (fr_one == con_F_one + persent ||
+    //     fr_one == con_F_one - persent) {
+    //   (fr_two == con_F_two + persent) ? counter = 1 : print(con_F_one);
+    //   (fr_two == con_F_two - persent) ? counter = 1 : print(con_F_one);
+    // } else if (fr_two == con_F_two + persent ||
+    //     fr_two == con_F_two - persent) {
+    //   (fr_one == con_F_one + persent) ? counter = 1 : print(con_F_one);
+    //   (fr_one == con_F_one - persent) ? counter = 1 : print(con_F_one);
+    // } else if (fr_two == con_F_two + persent ||
+    //     fr_two == con_F_two - persent) {
+    //   (fr_one == con_F_one + persent) ? counter = 1 : print(con_F_one);
+    //   (fr_one == con_F_one - persent) ? counter = 1 : print(con_F_one);
+    // } else {
+    //   con_F_one = con_F_one / 1.01;
+    //   con_F_two = con_F_two / 1.01;
+    // }
+
+    Get.offNamed("/result",
+        arguments: SettingData(a_one, a_two, c_one, c_two, v_one, v_two, r_one,
+            r_two, q_one, q_two, fr_one, fr_two, d_p, h_l));
   }
 }
 
@@ -311,11 +326,11 @@ class SettingData {
   double r_one;
   double r_two;
   double q_one;
-  double d_p;
-  double h_l;
   double q_two;
   double fr_one;
   double fr_two;
+  double d_p;
+  double h_l;
 
   SettingData(
       this.a_one,
@@ -328,8 +343,8 @@ class SettingData {
       this.r_two,
       this.q_one,
       this.q_two,
-      this.d_p,
-      this.h_l,
       this.fr_one,
-      this.fr_two);
+      this.fr_two,
+      this.d_p,
+      this.h_l);
 }

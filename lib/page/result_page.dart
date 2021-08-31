@@ -40,8 +40,8 @@ class _ResultPageState extends State<ResultPage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Center(
-              child: Container(
-                width: 300,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Column(
                   children: [
                     resultText(
@@ -84,13 +84,13 @@ class _ResultPageState extends State<ResultPage> {
                         "V",
                         "1",
                         ":",
-                        " ${((Get.arguments as SettingData).v_one).toStringAsFixed(3)}",
+                        " ${((Get.arguments as SettingData).v_one / 1000).toStringAsFixed(3)}",
                         "m/s"),
                     resultText(
                         "V",
                         "2",
                         ":",
-                        " ${((Get.arguments as SettingData).v_two).toStringAsFixed(3)}",
+                        " ${((Get.arguments as SettingData).v_two / 1000).toStringAsFixed(3)}",
                         "m/s"),
                     resultText(
                         "Q",
@@ -105,16 +105,28 @@ class _ResultPageState extends State<ResultPage> {
                         " ${((Get.arguments as SettingData).q_two).toStringAsFixed(3)}",
                         "m^3/s"),
                     resultText(
+                        "Re",
+                        "1",
+                        ":",
+                        " ${((Get.arguments as SettingData).r_one).toStringAsFixed(3)}",
+                        ""),
+                    resultText(
+                        "Re",
+                        "2",
+                        ":",
+                        " ${((Get.arguments as SettingData).r_two).toStringAsFixed(3)}",
+                        ""),
+                    resultText(
                         "f",
                         "real_1",
                         ":",
-                        " ${((Get.arguments as SettingData).fr_one).toStringAsFixed(3)}",
+                        " ${((Get.arguments as SettingData).fr_one).toStringAsFixed(10)}",
                         ""),
                     resultText(
                         "f",
                         "feal_2",
                         ":",
-                        " ${((Get.arguments as SettingData).fr_two).toStringAsFixed(3)}",
+                        " ${((Get.arguments as SettingData).fr_two).toStringAsFixed(10)}",
                         ""),
                     backButton()
                   ],
